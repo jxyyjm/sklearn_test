@@ -2,7 +2,7 @@
 
 ## @time       : 2017-04-26
 ## @author     : yujianmin
-## @reference  : 
+## @reference  : http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
 ## @what-to-do : try using tensorflow to make a test-cluster class
 
 from __future__ import division
