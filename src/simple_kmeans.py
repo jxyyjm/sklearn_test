@@ -49,7 +49,7 @@ class CSimple_test:
 		x    = digits.data
 		y    = digits.target
 		#data = np.hstack((x, y.reshape((y.shape[0],1))) ## merge
-		train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.2)
+		train_x, test_x, train_y, test_y = train_test_split(x, y, test_size=0.2, random_state=50)
 		self.train_x = train_x
 		self.train_y = train_y
 		self.test_x  = test_x
