@@ -13,6 +13,7 @@ import numpy as np
 from sklearn import metrics
 from sklearn import datasets
 from sklearn import linear_model
+from sklearn.externals import joblib
 from sklearn.cross_validation import train_test_split
 
 logging.basicConfig(
@@ -78,11 +79,15 @@ class CSimple_test:
 		print (metrics.confusion_matrix(self.test_y, test_pred_lab, np.unique(self.train_y)))
 
 	def model_save(self):
-		pass
+		joblib.dump(self.model, './train_model.m')
+		recall_model = joblib.load('./train_model.m')
+		test_pred    = recall_model.predict(self.test_x)
+		print ('reload saved model, test accuracy : ', metrics.accuracy_score(self.test_y, test_pred))
 if __name__=='__main__':
 	CTest = CSimple_test()
 	## read the data ##
 	CTest.read_data_split()
 	## train a cluster-model using sklearn ##
 	CTest.softmax_LR_sklearn()
-
+	## save the model
+	CTest.model_save()
