@@ -158,3 +158,4 @@ if __name__=='__main__':
 	TestModel.test_NuSVC()
 	TestModel.print_mid_para()
 	TestModel.predict_test()
+	print ('last think of a question, how to CV-test, and find the best para')
