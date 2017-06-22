@@ -45,30 +45,30 @@ class CTest_RBM:
 	def test_RBM(self):
 		'''
 			class BernoulliRBM
-			description : Bernoulli Restricted Bolltzmann Machine.
-			1) Parameters
-			n_components : int, Num-of binary hidden unitis
+			description   : Bernoulli Restricted Bolltzmann Machine.
+			1) Parameters ===================================================================
+			n_components  : int, Num-of binary hidden unitis
 			learning_rate : float, range 10**[0, -3]
-			batch_size : num-of examples each minibatch
-			n_iter : int, num-of iterations for training
-			verbose: int, 
-			random_state : integer or np.RandomState
-			2) Attributes
-			intercept_hidden_ : array-like, bias of the hidden units. shape=(n_components, )
+			batch_size    : num-of examples each minibatch
+			n_iter        : int, num-of iterations for training
+			verbose       : int, 
+			random_state  : integer or np.RandomState
+			2) Attributes ===================================================================
+			intercept_hidden_  : array-like, bias of the hidden units. shape=(n_components, )
 			intercept_visible_ : array-like, bias of the visible units, shape=(n_features, )
-			components_ : array-like, bias of weight matrix. shape=(n_components, n_features)
-			3) Methods
-			fit(X, Y=None)
+			components_        : array-like, bias of weight matrix. shape=(n_components, n_features)
+			3) Methods ======================================================================
+			fit(X, Y=None) == **import** ==
 				Fit the model to the data X.
-			gibbs(v)
+			gibbs(v)       == **import** ==
 				perform one Gibbs sample step.
 				v : array-like, shape=(n_samples, n_features)
-					values of visible layer to start from
+					values of visible layer to start from.
 				return: v_new, array-like, shape is same.
 					value of visible layers after one Gibbs step.
-			partial_fit(X, y=None)
-				Fit the model to the data X, which should contain a segment of the data
-			score_samples(X)
+			partial_fit(X, y=None) == **import** ==
+				Fit the model to the data X, which should contain a segment of the data.
+			score_samples(X)       == **import** ==
 				compute the pseudo-likelihood of X.
 				X : shape=(n_samples, n_features)
 					values of the visible-layer.
@@ -85,31 +85,24 @@ class CTest_RBM:
 			class :: MLPClassifier
 		'''
 		n_hidden = 100
-		clf      = BernoulliRBM(
+		clf      = neural_network.BernoulliRBM(
 					n_components = n_hidden,
 					learning_rate= 0.1,
 					batch_size   = 100,
 					n_iter       = 300,
 					random_state = None
 					)
-		Train_XY = np.hstack((self.trainX, self.trainY))
-		clf.fit(Train_X)
+		trainYLen= len(self.trainY)
+		Y = self.trainY.reshape((trainYLen, 1))
+		Train_XY = np.hstack((self.trainX, Y))
+		clf.fit(Train_XY)
 		self.model   = clf
-
-	def predict_test(self):
-		pred_test  = self.model.predict(self.testX)
-		pred_train = self.model.predict(self.trainX)
-		print ('train accuracy :', metrics.accuracy_score(self.trainY, pred_train), \
-			   'test  accuracy :', metrics.accuracy_score(self.testY,  pred_test)) 
-		
-		print ('train confusion matrix :')
-		print (metrics.confusion_matrix(self.trainY, pred_train))
-
-		print ('test confusion matrix :')
-		print (metrics.confusion_matrix(self.testY, pred_test))
 
 	def print_mid_para(self):
 		clf = self.model
+		print ('intercept_hidden_', clf.intercept_hidden_)
+		print ('intercept_visible_', clf.intercept_visible_)
+		print ('components_', clf.components_)
 
 
 if __name__=='__main__':
@@ -117,5 +110,3 @@ if __name__=='__main__':
 	TestModel.read_data()
 	TestModel.test_RBM()
 	TestModel.print_mid_para()
-	TestModel.predict_test()
-	print ('last think of a question, how to CV-test, and find the best para')
